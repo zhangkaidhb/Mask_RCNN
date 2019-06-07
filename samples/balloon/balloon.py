@@ -118,7 +118,7 @@ class BalloonDataset(utils.Dataset):
         # The VIA tool saves images in the JSON even if they don't have any
         # annotations. Skip unannotated images.
         annotations = [a for a in annotations if a['regions']]
-        print("ok")
+
         # Add images
         for a in annotations:
             # Get the x, y coordinaets of points of the polygons that make up
@@ -128,14 +128,15 @@ class BalloonDataset(utils.Dataset):
 
 
             if type(a['regions']) is dict:
-                print(a['regions'].values())
-                for r in a['regions'].values():
-                    print(r['region_attributes'])
+                #print(a['regions'].values())
+                #for r in a['regions'].values():
+                #    print(r['region_attributes'])
                 #polygons_screws =
                 #polygons_gears =
                 #polygons_cover
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
             else:
+                print(a['regions'].values())
                 polygons = [r['shape_attributes'] for r in a['regions']]
 
             # load_mask() needs the image size to convert polygons to masks.
