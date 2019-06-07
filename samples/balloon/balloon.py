@@ -125,7 +125,9 @@ class BalloonDataset(utils.Dataset):
             # the outline of each object instance. These are stores in the
             # shape_attributes (see json format above)
             # The if condition is needed to support VIA versions 1.x and 2.x.
-
+            polygons_screws = []
+            polygons_gears = []
+            polygons_cover = []
 
             if type(a['regions']) is dict:
                 #print(a['regions'].values())
@@ -136,8 +138,16 @@ class BalloonDataset(utils.Dataset):
                 #polygons_cover
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
             else:
-                print(a['regions'].values())
-                polygons = [r['shape_attributes'] for r in a['regions']]
+                for r in a['regions']:
+                    if r['region_attributes']['name']=='gear':
+                        polygons_gears.append(r['shape_attributes'])
+                    elif r['region_attributes']['name']=='gear':
+                        polygons_gears.append(r['shape_attributes'])
+                    elif r['region_attributes']['name']=='gear':
+                        polygons_gears.append(r['shape_attributes'])
+                    else:
+                        print("not the right names for the aois")
+
 
             # load_mask() needs the image size to convert polygons to masks.
             # Unfortunately, VIA doesn't include it in JSON, so we must read
