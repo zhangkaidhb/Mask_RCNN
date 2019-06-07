@@ -129,10 +129,10 @@ class BalloonDataset(utils.Dataset):
 
             if type(a['regions']) is dict:
                 for r in a['regions'].values():
-                    if r['region_attributes']
-                polygons_screws =
-                polygons_gears =
-                polygons_cover
+                    print(r['region_attributes'])
+                #polygons_screws =
+                #polygons_gears =
+                #polygons_cover
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
             else:
                 polygons = [r['shape_attributes'] for r in a['regions']]
