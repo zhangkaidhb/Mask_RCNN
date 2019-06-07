@@ -130,21 +130,16 @@ class BalloonDataset(utils.Dataset):
             polygons_cover = []
 
             if type(a['regions']) is dict:
-                #print(a['regions'].values())
-                #for r in a['regions'].values():
-                #    print(r['region_attributes'])
-                #polygons_screws =
-                #polygons_gears =
-                #polygons_cover
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
             else:
                 for r in a['regions']:
+                    print(r)
                     if r['region_attributes']['name']=='gear':
                         polygons_gears.append(r['shape_attributes'])
-                    elif r['region_attributes']['name']=='gear':
-                        polygons_gears.append(r['shape_attributes'])
-                    elif r['region_attributes']['name']=='gear':
-                        polygons_gears.append(r['shape_attributes'])
+                    elif r['region_attributes']['name']=='cover':
+                        polygons_cover.append(r['shape_attributes'])
+                    elif r['region_attributes']['name']=='screw':
+                        polygons_screws.append(r['shape_attributes'])
                     else:
                         print("not the right names for the aois")
 
