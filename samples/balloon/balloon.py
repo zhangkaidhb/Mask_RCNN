@@ -89,8 +89,8 @@ class BalloonDataset(utils.Dataset):
         """
         # Add classes. We have only one class to add.
         self.add_class("tool_disassembly", 1, "screw")
-        self.add_class("tool_disassembly", 1, "gear")
-        self.add_class("tool_disassembly", 1, "cover")
+        self.add_class("tool_disassembly", 2, "gear")
+        self.add_class("tool_disassembly", 3, "cover")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
