@@ -118,7 +118,7 @@ class BalloonDataset(utils.Dataset):
         # The VIA tool saves images in the JSON even if they don't have any
         # annotations. Skip unannotated images.
         annotations = [a for a in annotations if a['regions']]
-
+        print("ok")
         # Add images
         for a in annotations:
             # Get the x, y coordinaets of points of the polygons that make up
