@@ -59,14 +59,14 @@ class BalloonConfig(Config):
     Derives from the base Config class and overrides some values.
     """
     # Give the configuration a recognizable name
-    NAME = "balloon"
+    NAME = "tool_disassembly"
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
     IMAGES_PER_GPU = 2
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 1  # Background + balloon
+    NUM_CLASSES = 4  # Background, screw,gear,cover
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 100
@@ -88,7 +88,9 @@ class BalloonDataset(utils.Dataset):
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("balloon", 1, "balloon")
+        self.add_class("tool_disassembly", 1, "screw")
+        self.add_class("tool_disassembly", 1, "gear")
+        self.add_class("tool_disassembly", 1, "cover")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -123,10 +125,17 @@ class BalloonDataset(utils.Dataset):
             # the outline of each object instance. These are stores in the
             # shape_attributes (see json format above)
             # The if condition is needed to support VIA versions 1.x and 2.x.
+
+
             if type(a['regions']) is dict:
+                for r in a['regions'].values():
+                    if r['region_attributes']
+                polygons_screws =
+                polygons_gears =
+                polygons_cover
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
             else:
-                polygons = [r['shape_attributes'] for r in a['regions']] 
+                polygons = [r['shape_attributes'] for r in a['regions']]
 
             # load_mask() needs the image size to convert polygons to masks.
             # Unfortunately, VIA doesn't include it in JSON, so we must read
