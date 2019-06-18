@@ -162,7 +162,7 @@ class BalloonDataset(utils.Dataset):
                 path=image_path,
                 width=width, height=height,
                 polygons=polygons,
-                class_ids=class_ids)
+                class_ids=np.asarray(class_ids))
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
