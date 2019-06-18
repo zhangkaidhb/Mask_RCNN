@@ -88,9 +88,9 @@ class BalloonDataset(utils.Dataset):
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("tool_disassembly", 0, "screw")
-        self.add_class("tool_disassembly", 1, "gear")
-        self.add_class("tool_disassembly", 2, "cover")
+        self.add_class("tool_disassembly", 1, "screw")
+        self.add_class("tool_disassembly", 2, "gear")
+        self.add_class("tool_disassembly", 3, "cover")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -138,13 +138,13 @@ class BalloonDataset(utils.Dataset):
                     print(r)
                     if r['region_attributes']['name']=='gear':
                         polygons.append(r['shape_attributes'])
-                        class_ids.append(0)
+                        class_ids.append(2)
                     elif r['region_attributes']['name']=='cover':
                         polygons.append(r['shape_attributes'])
-                        class_ids.append(0)
+                        class_ids.append(3)
                     elif r['region_attributes']['name']=='screw':
                         polygons.append(r['shape_attributes'])
-                        class_ids.append(0)
+                        class_ids.append(1)
                     else:
                         print("not the right names for the aois")
 
