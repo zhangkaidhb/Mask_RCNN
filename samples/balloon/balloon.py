@@ -88,9 +88,9 @@ class BalloonDataset(utils.Dataset):
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("tool_disassembly", 1, "screw")
-        self.add_class("tool_disassembly", 2, "gear")
-        self.add_class("tool_disassembly", 3, "cover")
+        self.add_class("tool_disassembly", 0, "screw")
+        self.add_class("tool_disassembly", 1, "gear")
+        self.add_class("tool_disassembly", 2, "cover")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -128,6 +128,8 @@ class BalloonDataset(utils.Dataset):
             polygons_screws = []
             polygons_gears = []
             polygons_cover = []
+            polygons = []
+            class_ids = []
 
             if type(a['regions']) is dict:
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
@@ -135,11 +137,14 @@ class BalloonDataset(utils.Dataset):
                 for r in a['regions']:
                     print(r)
                     if r['region_attributes']['name']=='gear':
-                        polygons_gears.append(r['shape_attributes'])
+                        polygons.append(r['shape_attributes'])
+                        class_ids.append(0)
                     elif r['region_attributes']['name']=='cover':
-                        polygons_cover.append(r['shape_attributes'])
+                        polygons.append(r['shape_attributes'])
+                        class_ids.append(0)
                     elif r['region_attributes']['name']=='screw':
-                        polygons_screws.append(r['shape_attributes'])
+                        polygons.append(r['shape_attributes'])
+                        class_ids.append(0)
                     else:
                         print("not the right names for the aois")
 
@@ -156,7 +161,8 @@ class BalloonDataset(utils.Dataset):
                 image_id=a['filename'],  # use file name as a unique image id
                 path=image_path,
                 width=width, height=height,
-                polygons=polygons)
+                polygons=polygons,
+                class_ids=class_ids)
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
@@ -182,7 +188,7 @@ class BalloonDataset(utils.Dataset):
 
         # Return mask, and array of class IDs of each instance. Since we have
         # one class ID only, we return an array of 1s
-        return mask.astype(np.bool), np.ones([mask.shape[-1]], dtype=np.int32)
+        return mask.astype(np.bool), image_info['class_ids']
 
     def image_reference(self, image_id):
         """Return the path of the image."""
