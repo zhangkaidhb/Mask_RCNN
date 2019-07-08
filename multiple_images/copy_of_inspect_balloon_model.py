@@ -151,8 +151,7 @@ for counter, imagefile in enumerate(os.listdir(images_path)):
     image_id.append(counter)
     class_id.append(r['class_ids'])
 
-result = np.append(image_id,bounding_boxes,class_id)
-print(result)
+
 
 """## Color Splash
 
