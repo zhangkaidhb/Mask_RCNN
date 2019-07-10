@@ -128,9 +128,8 @@ print("Loading weights ", weights_path)
 model.load_weights(weights_path, by_name=True)
 
 """## Run Detection"""
-bounding_boxes = []
-image_id = []
-class_id = []
+
+result = []
 for counter, imagefile in enumerate(os.listdir(images_path)):
 
     image = skimage.io.imread(os.path.join(images_path,imagefile))
@@ -147,11 +146,12 @@ for counter, imagefile in enumerate(os.listdir(images_path)):
                                 title="Predictions")
     # jede zeile ist ein aoi, class ids correspondieren dazu
     #print(np.append(r['rois'], r['class_ids']))
-    bounding_boxes.append(r['rois'])
-    image_id.append(counter)
-    class_id.append(r['class_ids'])
+    print(r['rois'])
+    for index,roi in enumerate(r['rois']):
+        results.append([counter,roi,r['class_ids'][index]])
 
 
+print(result)
 
 """## Color Splash
 
