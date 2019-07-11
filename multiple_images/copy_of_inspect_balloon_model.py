@@ -146,8 +146,9 @@ for counter, imagefile in enumerate(os.listdir(images_path)):
                                 title="Predictions")
     # jede zeile ist ein aoi, class ids correspondieren dazu
     #print(np.append(r['rois'], r['class_ids']))
-    print(r['rois'])
+    print(type(r['rois']))
     for index,roi in enumerate(r['rois']):
+
         results.append([counter,roi,r['class_ids'][index]])
 
 
