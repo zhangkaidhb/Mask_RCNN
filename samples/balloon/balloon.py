@@ -48,6 +48,8 @@ COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
 # Directory to save logs and model checkpoints, if not provided
 # through the command line argument --logs
 DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
+NAME_OF_PROJECT = "tool_disassembly"
+AREAS_OF_INTEREST_NAMES = ["screw","gear","cover"]
 
 ############################################################
 #  Configurations
@@ -59,14 +61,14 @@ class BalloonConfig(Config):
     Derives from the base Config class and overrides some values.
     """
     # Give the configuration a recognizable name
-    NAME = "tool_disassembly"
+    NAME = NAME_OF_PROJECT
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
     IMAGES_PER_GPU = 2
 
     # Number of classes (including background)
-    NUM_CLASSES = 4  # Background, screw,gear,cover
+    NUM_CLASSES = len(AREAS_OF_INTEREST_NAMES) + 1  # Background, screw,gear,cover
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 100
@@ -87,12 +89,11 @@ class BalloonDataset(utils.Dataset):
         dataset_dir: Root directory of the dataset.
         subset: Subset to load: train or val
         """
-        # Add classes. We have only one class to add.
-        self.add_class("tool_disassembly", 1, "screw")
-        self.add_class("tool_disassembly", 2, "gear")
-        self.add_class("tool_disassembly", 3, "cover")
+        for index,name in enumerate(AREAS_OF_INTEREST_NAMES):
+            self.add_class(NAME_OF_PROJECT,index+1,name)
 
-        # Train or validation dataset?
+
+        # Train or validation dataset?", 3, "cover")
         assert subset in ["train", "val"]
         dataset_dir = os.path.join(dataset_dir, subset)
 
@@ -125,26 +126,20 @@ class BalloonDataset(utils.Dataset):
             # the outline of each object instance. These are stores in the
             # shape_attributes (see json format above)
             # The if condition is needed to support VIA versions 1.x and 2.x.
-            polygons_screws = []
-            polygons_gears = []
-            polygons_cover = []
             polygons = []
             class_ids = []
 
             if type(a['regions']) is dict:
                 polygons = [r['shape_attributes'] for r in a['regions'].values()]
+                #does not work
             else:
                 for r in a['regions']:
                     print(r)
-                    if r['region_attributes']['name']=='gear':
-                        polygons.append(r['shape_attributes'])
-                        class_ids.append(2)
-                    elif r['region_attributes']['name']=='cover':
-                        polygons.append(r['shape_attributes'])
-                        class_ids.append(3)
-                    elif r['region_attributes']['name']=='screw':
-                        polygons.append(r['shape_attributes'])
-                        class_ids.append(1)
+
+                    if r['region_attributes']['name'] in AREAS_OF_INTEREST_NAMES:
+                        polygons.append(r["shape_attributes"])
+                        class_ids.append(AREAS_OF_INTEREST_NAMES.index(r['region_attributes']['name'])+1)
+
                     else:
                         print("not the right names for the aois")
 
@@ -157,7 +152,7 @@ class BalloonDataset(utils.Dataset):
             height, width = image.shape[:2]
 
             self.add_image(
-                "tool_disassembly",
+                NAME_OF_PROJECT,
                 image_id=a['filename'],  # use file name as a unique image id
                 path=image_path,
                 width=width, height=height,
@@ -173,7 +168,7 @@ class BalloonDataset(utils.Dataset):
         """
         # If not a balloon dataset image, delegate to parent class.
         image_info = self.image_info[image_id]
-        if image_info["source"] != "tool_disassembly":
+        if image_info["source"] != NAME_OF_PROJECT:
             return super(self.__class__, self).load_mask(image_id)
 
         # Convert polygons to a bitmap mask of shape
@@ -193,7 +188,7 @@ class BalloonDataset(utils.Dataset):
     def image_reference(self, image_id):
         """Return the path of the image."""
         info = self.image_info[image_id]
-        if info["source"] == "tool_disassembly":
+        if info["source"] == NAME_OF_PROJECT:
             return info["path"]
         else:
             super(self.__class__, self).image_reference(image_id)
