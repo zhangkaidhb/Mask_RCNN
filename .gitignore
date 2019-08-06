@@ -6,6 +6,10 @@ results/
 temp/
 test/
 
+data/model/*.h5
+
+data/videos/*.mp4
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
