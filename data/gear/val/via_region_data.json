@@ -52,8 +52,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -111,8 +110,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -169,8 +167,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -226,8 +223,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -286,8 +282,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -347,8 +342,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -411,8 +405,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -476,8 +469,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -534,8 +526,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -595,8 +586,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -655,8 +645,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -720,8 +709,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -782,8 +770,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -845,8 +832,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -905,8 +891,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -968,8 +953,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1028,8 +1012,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1093,8 +1076,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1149,8 +1131,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1214,8 +1195,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1276,37 +1256,36 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
         "shape_attributes": {
           "name": "polygon",
           "all_points_x": [
-            594,
-            601,
-            608,
-            614,
-            618,
-            620,
-            620,
-            616,
-            612,
-            605,
-            598,
-            589,
-            582,
-            574,
-            569,
+            595,
+            602,
+            609,
+            615,
+            619,
+            621,
+            621,
+            617,
+            613,
+            606,
+            599,
+            590,
+            583,
+            575,
+            570,
+            567,
             566,
-            565,
-            565,
-            569,
-            573,
-            577,
-            580,
-            587
+            566,
+            570,
+            574,
+            578,
+            581,
+            588
           ],
           "all_points_y": [
             200,
@@ -1335,8 +1314,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1393,8 +1371,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1454,8 +1431,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1520,8 +1496,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1573,8 +1548,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1633,8 +1607,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1692,8 +1665,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1754,8 +1726,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1817,8 +1788,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
@@ -1883,8 +1853,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "marker"
         }
       },
       {
@@ -1948,8 +1917,7 @@
           ]
         },
         "region_attributes": {
-          "marker": "",
-          "id_point": ""
+          "name": "id_point"
         }
       }
     ],
