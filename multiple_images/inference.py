@@ -132,7 +132,7 @@ print("Loading weights ", weights_path)
 model.load_weights(weights_path, by_name=True)
 
 """## Run Detection"""
-cam = cv2.VideoCapture(os.path.join(images_path,"video1.mp4"))
+cam = cv2.VideoCapture(os.path.join(images_path,"world.mp4"))
 result = []
 counter = 0
 while(True):
@@ -158,7 +158,7 @@ while(True):
     counter+=1
 
 #comment this line if you do not want to inspect the results
-plt.show()
+#plt.show()
 
 file = open("allAOIs","w")
 
