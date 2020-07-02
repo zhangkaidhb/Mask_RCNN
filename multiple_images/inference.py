@@ -21,11 +21,13 @@ import numpy as np
 import tensorflow as tf
 import cv2
 
-
+# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+# os.environ['CUDA_VISIBLE_DEVICES'] = "2"#change the number to the GPU you want to use
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
-ROOT_DIR = os.path.join(ROOT_DIR,"Mask_RCNN")
-#how many frames you want to take(intervall of 1 is every frame)
+ROOT_DIR = os.path.join(ROOT_DIR, "Mask_RCNN")
+# how many frames you want to take(intervall of 1 is every frame)
 INTERVALL = 10
 
 # Import Mask RCNN
@@ -38,7 +40,7 @@ import mrcnn.utils as utils
 
 from samples.balloon import balloon
 
-# %matplotlib inline 
+# %matplotlib inline
 
 # Directory to save logs and trained model
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
@@ -47,12 +49,12 @@ MODEL_DIR = os.path.join(ROOT_DIR, "logs")
 # You can download this file from the Releases page
 # https://github.com/matterport/Mask_RCNN/releases
 # This path will differ depending on where you saved the Weights and how they are named
-BALLON_WEIGHTS_PATH = os.path.join(ROOT_DIR, "data","model", "mask_rcnn_tool_disassembly_0030.h5")
+BALLON_WEIGHTS_PATH = os.path.join(ROOT_DIR, "data", "model", "mask_rcnn_tool_disassembly_0030.h5")
 
 """## Configurations"""
 
 config = balloon.BalloonConfig()
-BALLOON_DIR = os.path.join(ROOT_DIR, "data","gear")
+BALLOON_DIR = os.path.join(ROOT_DIR, "data", "gear")
 
 
 # Override the training configurations with a few
@@ -69,7 +71,7 @@ config.display()
 """## Notebook Preferences"""
 
 # Device to load the neural network on.
-# Useful if you're training a model on the same 
+# Useful if you're training a model on the same
 # machine, in which case use CPU and leave the
 # GPU for training.
 DEVICE = "/cpu:0"  # /cpu:0 or /gpu:0
@@ -84,7 +86,7 @@ def get_ax(rows=1, cols=1, size=16):
     """Return a Matplotlib Axes array to be used in
     all visualizations in the notebook. Provide a
     central point to control graph sizes.
-    
+
     Adjust the size attribute to control how big to render images
     """
     _, ax = plt.subplots(rows, cols, figsize=(size * cols, size * rows))
@@ -100,16 +102,14 @@ dataset.load_balloon(BALLOON_DIR, "val")
 # Must call before using the dataset
 dataset.prepare()
 
-
-
 """## Load Model"""
 
 # Create model in inference mode
-with tf.device(DEVICE):
+with tf.device("/device:GPU:2"):###Change the
     model = modellib.MaskRCNN(mode="inference", model_dir=MODEL_DIR,
                               config=config)
-
-
+# with tf.device("/device:GPU:1"):  #device name
+  # code here
 # Run this cell to mount your Google Drive.
 # click on the link and copy the password
 
@@ -125,45 +125,62 @@ with tf.device(DEVICE):
 
 # Or, load the last model you trained
 weights_path = BALLON_WEIGHTS_PATH
-images_path = os.path.join(ROOT_DIR,"data","video")
+address1= os.path.abspath('../../..')+'\\Recordings'
+# print(address1)
 
-# Load weights
-print("Loading weights ", weights_path)
-model.load_weights(weights_path, by_name=True)
+address_id='exports\\000' #需要更改到你自己的eye-trackingsystem对应输出文件夹
+# print(address_id)
 
-"""## Run Detection"""
-cam = cv2.VideoCapture(os.path.join(images_path,"world.mp4"))
-result = []
-counter = 0
-while(True):
-    ret, image = cam.read()
+counter_kai=0
+for file_name in os.listdir(address1):
+    # print(file_name)
+    images_path=address1+'\\'+file_name+'\\'+address_id
 
-    if not ret:
-        break
-    if (not counter%INTERVALL==0):
-        counter+=1
-        continue
-    # Run object detection
-    results = model.detect([image], verbose=1)
-    # Display results
-    ax = get_ax(1)
-    r = results[0]
-    visualize.display_instances(image, r['rois'], r['masks'], r['class_ids'],
-                               dataset.class_names, r['scores'], ax=ax,
-                                title="Predictions")
 
-    for index,roi in enumerate(r['rois']):
-        result.append([counter//INTERVALL,np.array(roi),r['class_ids'][index]])
+# print(counter)
+#     images_path = os.path.join(ROOT_DIR, "data", "video")
 
-    counter+=1
+    # Load weights
+    print("Loading weights ", weights_path)
+    model.load_weights(weights_path, by_name=True)
 
-#comment this line if you do not want to inspect the results
-#plt.show()
+    """## Run Detection"""
+    cam = cv2.VideoCapture(os.path.join(images_path, "world.mp4"))
+    result = []
+    counter = 0
+    while (True):
+        ret, image = cam.read()
 
-file = open("allAOIs","w")
+        if not ret:
+            break
+        if (not counter % INTERVALL == 0):
+            counter += 1
+            continue
+        # Run object detection
+        results = model.detect([image], verbose=1)
+        # Display results
+        ax = get_ax(1)
+        r = results[0]
+        visualize.display_instances(image, r['rois'], r['masks'], r['class_ids'],
+                                    dataset.class_names, r['scores'], ax=ax,
+                                    title="Predictions")
 
-for counter, aoi in enumerate(result):
+        for index, roi in enumerate(r['rois']):
+            result.append([counter // INTERVALL, np.array(roi), r['class_ids'][index]])
 
-    text = str(aoi[0]) + " " + str(aoi[1][0]) + " " + str(aoi[1][1]) + " " + str(aoi[1][2]) + " " + str(aoi[1][3]) + " " + dataset.class_names[aoi[2]] + "\n"
-    file.write(text)
-file.close()
+        counter += 1
+
+    # comment this line if you do not want to inspect the results
+    # plt.show()
+    address2=os.path.abspath('../../..')+"\\Mark_RCNN\\Mask_RCNN\\multiple_images\\data for analysis\\"+file_name
+    file = open("%s"%(address2), "w")
+
+    for counter, aoi in enumerate(result):
+        text = str(aoi[0]) + " " + str(aoi[1][0]) + " " + str(aoi[1][1]) + " " + str(aoi[1][2]) + " " + str(
+            aoi[1][3]) + " " + dataset.class_names[aoi[2]] + "\n"
+        file.write(text)
+    file.close()
+    counter_kai += 1
+    print('The %dth group:%s finished'%(counter_kai,file_name))
+    # if counter_kai == 2:
+    #     break
